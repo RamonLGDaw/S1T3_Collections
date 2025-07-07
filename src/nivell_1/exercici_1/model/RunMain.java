@@ -1,104 +1,37 @@
 package nivell_1.exercici_1.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
+import nivell_1.exercici_1.service.MonthService;
+
+import java.util.*;
 
 public class RunMain {
 
-    public static void run(){
-        Month january = new Month("January");
-        Month february = new Month("February");
-        Month march = new Month("March");
-        Month april = new Month("April");
-        Month may = new Month("May");
-        Month june = new Month("June");
-        Month july = new Month("July");
-        Month august = new Month("August");
-        Month september = new Month("September");
-        Month october = new Month("October");
-        Month november = new Month("November");
-        Month december = new Month("December");
+    public static void run() {
+        MonthService monthService = new MonthService();
 
-        ArrayList<Month> calendar = new ArrayList<>(Arrays.asList(
-                january,
-                february,
-                march,
-                april,
-                may,
-                june,
-                july,
-                september,
-                october,
-                november,
-                december
-        ));
+        System.out.println("Creant la llista de mesos SENSE el mes d’agost");
+        List<Month> calendar = monthService.createMonthListWithoutAugust();
+        monthService.printWithForLoop(calendar);
 
+        System.out.println("\nInserint el mes 'Agost' a la posició 8 (índex 7)");
+        monthService.insertMonth(calendar, 7, new Month("August"));
+        monthService.printWithForLoop(calendar);
 
-        System.out.println("Calendar: " + calendar);
+        System.out.println("\nRecorregut de l'ArrayList amb un iterator:");
+        monthService.printWithIterator(calendar);
 
+        System.out.println("\nConvertint la llista a un HashSet per evitar duplicats");
+        Set<Month> calendarSet = monthService.convertToSet(calendar);
+        monthService.printWithForLoop(calendarSet);
 
-        calendar.add(7, august);
+        System.out.println("\nRecorregut del HashSet amb un iterator:");
+        monthService.printWithIterator(calendarSet);
+        System.out.println("Longitud: " +calendarSet.size());
 
-
-        System.out.println("Calendar in ArrayList: " + calendar);
-
-
-        HashSet<Month> calendarHashSet = new HashSet<>(Arrays.asList(
-                january,
-                february,
-                march,
-                april,
-                may,
-                june,
-                july,
-                august,
-                september,
-                october,
-                november,
-                december
-        ));
-
-
-
-        System.out.println("HashSet with months: " + calendarHashSet);
-        System.out.println("HastSet lenght: " + calendarHashSet.size());
-
-
-        calendarHashSet.add(august);
-
-        System.out.println("HashSet after trying to add august again:");
-        System.out.println("HashSet with months: " + calendarHashSet);
-        System.out.println("HastSet length: " + calendarHashSet.size());
-
-
-
-        System.out.println("\nArrayList Calendar for loop:");
-        for(Month month:calendar){
-            System.out.println("Month: " + month);
-        }
-
-
-        System.out.println("\nHashSet Calendar for loop:");
-        for(Month month:calendarHashSet){
-            System.out.println("Month: " + month);
-        }
-
-
-        System.out.println("\nArrayList Calendar iterator:");
-        Iterator<Month> iteratorArrayList = calendar.iterator();
-        while (iteratorArrayList.hasNext()){
-            Month month = iteratorArrayList.next();
-            System.out.println("Month: " + month);
-        }
-
-
-        System.out.println("\nHashSet Calendar iterator:");
-        Iterator<Month> iteratorHashSet = calendarHashSet.iterator();
-        while (iteratorHashSet.hasNext()){
-            Month month = iteratorHashSet.next();
-            System.out.println("Month: " + month);
-        }
+        System.out.println("\nIntentant afegir 'Agost' una altra vegada al HashSet.");
+        calendarSet.add(new Month("August"));
+        System.out.println("HashSet després d'intentar afegir el mes duplicat 'Agost':");
+        monthService.printWithForLoop(calendarSet);
+        System.out.println("Longitud: " +calendarSet.size());
     }
 }
